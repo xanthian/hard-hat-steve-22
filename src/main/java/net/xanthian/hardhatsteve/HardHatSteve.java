@@ -1,53 +1,28 @@
 package net.xanthian.hardhatsteve;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Identifier;
 import net.xanthian.hardhatsteve.common.item.HardHatSteveItems;
 import net.xanthian.hardhatsteve.common.sound.HardHatSteveSoundEvents;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.xanthian.hardhatsteve.config.HHSConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.util.Properties;
 
 public class HardHatSteve implements ModInitializer {
-    public static final Logger LOGGER = LogManager.getLogger("hard-hat-steve");
+    public static final String MOD_ID = "hard_hat_steve";
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-    public static float reachModifier =  0.5F;
+    public static final ItemGroup HARD_HAT_STEVE = FabricItemGroupBuilder.build(new Identifier(HardHatSteve.MOD_ID, "hard_hat_steve"),
+            () -> new ItemStack(HardHatSteveItems.HARD_HAT));
 
     @Override
     public void onInitialize() {
+        HHSConfig.registerConfigs();
         HardHatSteveSoundEvents.init();
         HardHatSteveItems.init();
-
-        //CONFIG DOESNT WORK //
-        //Properties configuration = new Properties();
-      //  configuration.setProperty("reachModifier", String.valueOf(reachModifier));
-     //   File configurationFile = new File(FabricLoader.getInstance().getConfigDirectory(), "hard-hat-steve.properties");
-
-      //  if (configurationFile.exists()) {
-        //    try (InputStream in = new FileInputStream(configurationFile)) {
-          //      configuration.load(in);
-          //      LOGGER.info("Loaded configuration file \"" + configurationFile + "\"");
-          //  } catch (IOException e) {
-         //       LOGGER.error("Could not read configuration file \"" + configurationFile + "\"", e);
-        //    }
-      //  } else {
-          //  try (OutputStream out = new FileOutputStream(configurationFile)) {
-          //      configuration.store(out, "Hard Hat Steve configuration");
-            //    LOGGER.info("Generated configuration file \"" + configurationFile + "\"");
-          //  } catch (IOException e) {
-           //     LOGGER.error("Could not write configuration file \"" + configurationFile + "\"", e);
-         //   }
-      //  }
-
-     //   String relativeSpawnRateString = configuration.getProperty("reachModifier");
-     //   try {
-       //     reachModifier = Float.parseFloat(relativeSpawnRateString);
-      //  } catch (NumberFormatException e) {
-       //     LOGGER.error("Error processing configuration file \"" + configurationFile + "\".");
-       //     LOGGER.error("Expected configuration value for reachModifier to be a number, found \"" + relativeSpawnRateString + "\".");
-       //     LOGGER.error("Using default value \"" + reachModifier + "\" instead.");
-      //  }
     }
 }

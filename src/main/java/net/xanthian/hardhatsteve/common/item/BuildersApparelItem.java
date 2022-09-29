@@ -3,6 +3,7 @@ package net.xanthian.hardhatsteve.common.item;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -12,6 +13,7 @@ import net.minecraft.item.DyeableArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.xanthian.hardhatsteve.HardHatSteve;
+import net.xanthian.hardhatsteve.config.HHSConfig;
 
 import java.util.UUID;
 
@@ -25,10 +27,11 @@ public class BuildersApparelItem extends DyeableArmorItem {
     private final int defaultColor;
     private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 
-    public BuildersApparelItem(ArmorMaterial armorMaterial_1, EquipmentSlot equipmentSlot_1, int defaultColor, Settings item$Settings_1) {
-        super(armorMaterial_1, equipmentSlot_1, item$Settings_1);
+    public BuildersApparelItem(ArmorMaterial armorMaterial_1, EquipmentSlot equipmentSlot_1, int defaultColor) {
+        super(armorMaterial_1, equipmentSlot_1,new FabricItemSettings().group(HardHatSteve.HARD_HAT_STEVE));
         this.defaultColor = defaultColor;
-        this.attributeModifiers = ImmutableMultimap.of(ReachEntityAttributes.REACH, new EntityAttributeModifier(MODIFIERS[slot.getEntitySlotId()], "Reach modifier", HardHatSteve.reachModifier, EntityAttributeModifier.Operation.ADDITION));
+        this.attributeModifiers = ImmutableMultimap.of(ReachEntityAttributes.REACH, new EntityAttributeModifier(MODIFIERS[slot.getEntitySlotId()],
+                "Reach modifier", HHSConfig.reach, EntityAttributeModifier.Operation.ADDITION));
     }
 
     @Override
